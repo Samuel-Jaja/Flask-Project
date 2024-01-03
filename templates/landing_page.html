@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .navbar a:hover {
+            color: #c7c7c7;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: calc(100vh - 40px);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .content-text {
+            max-width: 50%;
+        }
+        h1.sliding-text {
+            animation: slide 0.5s forwards;
+            color: #333;
+        }
+        
+        h1 .thermo {
+            color: rgb(6, 106, 194);
+        }
+
+        h1 .engineering {
+            color: #0fc183;
+        }
+
+        @keyframes slide {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .action-buttons a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007BFF;
+            border: 1px solid #007BFF;
+            padding: 10px 40px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .action-buttons a:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="../static/images/UNIPORTLOGOpng.png" alt="Logo">
+            <a href="https://www.uniport.edu.ng/">Department of Chemical Engineering | University of Port Harcourt</a>
+        </div>
+        <div class="nav-links">
+            <a href="https://www.uniport.edu.ng/">Home</a>
+            <a href="/department">Research Project</a>
+            <a href="https://www.uniport.edu.ng/schools/engineering/2019-01-24-10-57-01.html">About</a>
+            <a href="/contact">Contact Us</a>
+            <a href="/developer">Developed by</a>
+            <a href="/signup">Sign Up</a>
+            <p>|</p>
+            <a href="/login">Login</a>
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="content-text">
+            <h1 class="sliding-text"> Introducing <span class="thermo">ThermoCompute</span> Department of <span class="engineering">Chemical Engineering</span> at the University of Port Harcourt</h1>
+            <img width="600" height="400" src="../static/images/chemengr.jpg" alt="Description of your image">
+        </div>
+       
+        
+        <div class="action-buttons">
+            <!-- <div>
+                <h2>Sign Up On ThermoCompute to compute <br> Binary and Ternary Bubble Point and Dew Point Computations </h2>
+            </div> -->
+            
+            <h3>A Thermodynamics Computation Engine <br>Leveraging Python Programming</h3>
+            <a href="/bubble_point_computation">Bubble Point Computation</a>
+            <a href="/dew_point_computation">Dew Point Computation</a>
+        </div>
+    </div>
+</body>
+</html>

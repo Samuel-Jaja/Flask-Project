@@ -1,0 +1,230 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #f2f2f2;
+            margin: 0;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input[type="text"], select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 40px;">Thermodynamics Engine    Dew Point Computation</h1>
+
+        <h2>Enter Pressure (in mmHg):</h2>
+        <form action="/" method="post">
+            <input type="text" name="pressure" placeholder="Enter pressure in mmHg">
+            <br>
+            <select name="mixture_type">
+                <option value="binary">Binary Mixture</option>
+                <option value="ternary">Ternary Mixture</option>
+            </select>
+            <br>
+            <input type="text" name="x1" placeholder="Enter mole fraction for component 1">
+            <br>
+            <input type="text" name="x2" placeholder="Enter mole fraction for component 2">
+            <br>
+            <input type="text" name="x3" placeholder="Enter mole fraction for component 3 (if applicable)">
+            <br>
+            <input type="submit" value="Calculate Dew Point Temperature">
+        </form>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #f2f2f2;
+            margin: 0;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .container h1{
+            color: rgb(6, 106, 194);;
+        }
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input[type="text"], select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 40px;">Thermodynamics Engine Dew Point Computation</h1>
+
+        <h2>Enter Pressure (in mmHg):</h2>
+        <form action="/dew_point_computation" method="post">
+            <input type="text" name="pressure" placeholder="Enter pressure in mmHg">
+            <br>
+            <label for="mixture_type">Select Mixture Type:</label>
+            <select id="mixture_type" name="mixture_type">
+                <option value="binary">Binary Mixture</option>
+                <option value="ternary">Ternary Mixture</option>
+            </select>
+            <br>
+            <label for="component_dropdown">Select Components:</label>
+            <select id="component_dropdown" name="selected_components" multiple>
+                <!-- Options will be dynamically populated using JavaScript -->
+            </select>
+            <br>
+            <div id="fractionInputs">
+                <!-- Fraction inputs will be dynamically populated using JavaScript -->
+            </div>
+            <input type="submit" value="Calculate Dew Point Temperature">
+        </form>
+    </div>
+
+    <!-- JavaScript for dynamic component selection and fraction inputs -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Components available for selection
+            const allComponents = ['ethane', 'propane', 'butane', 'pentane', 'others'];
+
+            // Function to update the component dropdown
+            function updateComponentDropdown() {
+                const componentDropdown = document.getElementById('component_dropdown');
+                const mixtureType = document.getElementById('mixture_type').value;
+
+                // Clear existing options
+                componentDropdown.innerHTML = '';
+
+                // Populate options with checkboxes for each component
+                allComponents.forEach((component, index) => {
+                    const option = document.createElement('option');
+                    option.value = component;
+                    option.text = component;
+                    option.dataset.index = index; // Store the index as a data attribute
+                    componentDropdown.add(option);
+                });
+            }
+
+            // Function to update the fraction inputs
+            function updateFractionInputs() {
+                const fractionInputsDiv = document.getElementById('fractionInputs');
+                const mixtureType = document.getElementById('mixture_type').value;
+
+                // Clear existing fraction inputs
+                fractionInputsDiv.innerHTML = '';
+
+                // Populate fraction inputs based on the selected mixture type
+                const fractionsCount = (mixtureType === 'binary') ? 2 : 3;
+
+                for (let i = 1; i <= fractionsCount; i++) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = `x${i}`;
+                    input.placeholder = `Enter mole fraction for component ${i}`;
+                    fractionInputsDiv.appendChild(input);
+                    fractionInputsDiv.appendChild(document.createElement('br'));
+                }
+
+                // Add event listener to update placeholders when component is selected
+                document.getElementById('component_dropdown').addEventListener('change', function () {
+                    const selectedComponent = document.getElementById('component_dropdown').value;
+                    const selectedIndex = document.getElementById('component_dropdown').selectedOptions[0].dataset.index;
+                    const moleFractionInputs = fractionInputsDiv.querySelectorAll('input');
+
+                    // Update the placeholder for the corresponding input based on the selected component
+                    moleFractionInputs[selectedIndex].placeholder = `Enter mole fraction of ${selectedComponent} for component ${selectedIndex + 1}`;
+
+                    // Disable other component selection until a mole fraction is entered
+                    allComponents.forEach(component => {
+                        const otherOption = componentDropdown.querySelector(`option[value="${component}"]`);
+                        otherOption.disabled = true;
+                    });
+
+                    // Enable only the next available component for selection
+                    const nextIndex = (selectedIndex + 1) % allComponents.length;
+                    const nextComponent = allComponents[nextIndex];
+                    const nextOption = componentDropdown.querySelector(`option[value="${nextComponent}"]`);
+                    nextOption.disabled = false;
+                });
+            }
+
+            // Initial update on page load
+            updateComponentDropdown();
+            updateFractionInputs();
+
+            // Add event listener to update components and fractions when mixture type changes
+            document.getElementById('mixture_type').addEventListener('change', function () {
+                updateComponentDropdown();
+                updateFractionInputs();
+            });
+        });
+    </script>
+</body>
+</html>
+
+

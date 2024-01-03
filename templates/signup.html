@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <!-- Your custom JavaScript file -->
+    <script src="../static/custom.js"></script>
+    <!-- AWS SDK and Cognito SDK installed via npm -->
+    <script src="../node_modules/aws-sdk/dist/aws-sdk.min.js"></script>
+    <script src="../node_modules/amazon-cognito-identity-js/dist/aws-cognito-sdk.min.js"></script>
+
+    <!-- Your custom CSS file -->
+    <link rel="stylesheet" href="../static/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            text-align: left; /* Align labels to the left */
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Signup</h2>
+    <!-- Update the form action to point to the correct route -->
+    <form id="signupForm" action="{{ url_for('signup_page') }}" method="POST">
+        <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="matricNumber">Matriculation Number:</label>
+            <input type="text" id="matricNumber" pattern="U\d{4}/\d{7}" title="Please enter a valid matriculation number (e.g., U2015/3030002)" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" required>
+
+            <button type="submit" onclick="signup()">Signup</button>
+    </form>
+    
+</div>
+
+</body>
+</html>
