@@ -85,7 +85,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Components available for selection
-        const allComponents = ['ethane5', 'propane', 'butane', 'pentane', 'others'];
+        const allComponents = ['benzene', 'toluene', 'n-butane', 'n-pentane', 'n-hexane'];
 
         // Function to update the component dropdown
         function updateComponentDropdown() {
@@ -128,11 +128,12 @@
             // Add event listener to update placeholders when component is selected
             document.getElementById('component_dropdown').addEventListener('change', function () {
                 const selectedComponent = document.getElementById('component_dropdown').value;
-                const selectedIndex = document.getElementById('component_dropdown').selectedOptions[0].dataset.index;
                 const moleFractionInputs = fractionInputsDiv.querySelectorAll('input');
 
-                // Update the placeholder for the corresponding input based on the selected component
-                moleFractionInputs[selectedIndex].placeholder = `Enter mole fraction of ${selectedComponent} for component ${selectedIndex + 1}`;
+                // Update the placeholder for all fraction inputs based on the selected component
+                moleFractionInputs.forEach((input, index) => {
+                    input.placeholder = `Enter mole fraction of ${selectedComponent} for component ${index + 1}`;
+                });
 
                 // Disable other component selection until a mole fraction is entered
                 allComponents.forEach(component => {
@@ -141,6 +142,7 @@
                 });
 
                 // Enable only the next available component for selection
+                const selectedIndex = document.getElementById('component_dropdown').selectedOptions[0].dataset.index;
                 const nextIndex = (selectedIndex + 1) % allComponents.length;
                 const nextComponent = allComponents[nextIndex];
                 const nextOption = componentDropdown.querySelector(`option[value="${nextComponent}"]`);
@@ -159,10 +161,6 @@
         });
     });
 </script>
-
-
-
-
 
 </body>
 </html>
